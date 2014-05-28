@@ -23,5 +23,7 @@ define(function(require, exports, module) {
         var appView = new AppView({ data : data });
 
         mainContext.add(appView);
+
+        mainContext.setPerspective(1000);
     }
 });
