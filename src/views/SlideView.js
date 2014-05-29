@@ -1,6 +1,5 @@
 /*** SlideView ***/
 
-/* eslint no-use-before-define: 0 */
 define(function(require, exports, module) {
     var View = require('famous/core/View');
     var Surface = require('famous/core/Surface');

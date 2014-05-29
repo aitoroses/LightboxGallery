@@ -1,6 +1,5 @@
 /*** SlideshowView ***/
 
-/* eslint no-use-before-define: 0 */
 define(function(require, exports, module) {
     var View = require('famous/core/View');
     var Transform = require('famous/core/Transform');
@@ -86,6 +85,11 @@ define(function(require, exports, module) {
 
         this.currentIndex++;
         if (this.currentIndex === this.slides.length) this.currentIndex = 0;
+        this.showCurrentSlide();
+    };
+
+    SlideshowView.prototype.showSlide = function showSlide(slideIndex) {
+        this.currentIndex = slideIndex;
         this.showCurrentSlide();
     };
 

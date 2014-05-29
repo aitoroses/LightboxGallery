@@ -9,7 +9,6 @@ define(function(require, exports, module) {
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
     // var Surface = require('famous/core/Surface');
 
-
     var SlideshowView = require('views/SlideshowView');
     var SlideSidebarView = require('views/SlideSidebarView');
 
@@ -60,6 +59,8 @@ define(function(require, exports, module) {
             data: this.options.data
         });
 
+        // Store a reference
+        this._slideshowView = slideshowView;
 
         var slideshowModifier = new StateModifier({
             origin: [0.5, 0],
@@ -97,8 +98,14 @@ define(function(require, exports, module) {
 
     function _createSidebar() {
         // Create a new instance
-        var sidebar = new SlideSidebarView();
+        var sidebar = new SlideSidebarView({
+            data: this.options.data
+        });
         this.add(sidebar);
+
+        sidebar.on('thumb', function(index) {
+            this._slideshowView.showSlide(index);
+        }.bind(this));
     }
 
     module.exports = AppView;
