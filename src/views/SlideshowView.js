@@ -1,11 +1,12 @@
 /*** SlideshowView ***/
+
 /* eslint no-use-before-define: 0 */
 define(function(require, exports, module) {
     var View = require('famous/core/View');
     var Transform = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
     var Lightbox = require('famous/views/Lightbox');
-    //var Easing = require('famous/transitions/Easing');
+    var Easing = require('famous/transitions/Easing');
 
     var SlideView = require('views/SlideView');
 
@@ -14,8 +15,8 @@ define(function(require, exports, module) {
 
         this.rootModifier = new StateModifier({
             size: this.options.size,
-            origin: [0.5, .5],
-            align: [0.5, 0.5]
+            origin: [0.5, 0],
+            align: [0.5, 0]
         });
 
         this.mainNode = this.add(this.rootModifier);
@@ -32,17 +33,16 @@ define(function(require, exports, module) {
         size: [450, 500],
         data: undefined,
         lightboxOpts: {
-            inTransform: Transform.rotateY(0.5),
+            inTransform: Transform.thenMove(Transform.rotateX(0.9), [0,-300,-300]),
             inOpacity: 1,
             inOrigin: [0,0],
             showOrigin: [0,0],
             showTransform: Transform.translate(0,0,0),
-            outTransform: Transform.rotateY(-Math.PI/2),
-            outOpacity: 1,
+            outTransform: Transform.thenMove(Transform.rotateZ(0.7), [0, window.innerHeight, -1000]),
+            outOpacity: 0,
             outOrigin: [0,0],
-            inTransition: {duration: 500, curve: 'linear'},
-            outTransition: {duration: 700, curve: 'linear'},
-            overlap: true
+            inTransition: {duration: 650, curve: 'easeOut'},
+            outTransition: {duration: 500, curve: Easing.inCubic}
         }
     };
 
@@ -72,11 +72,18 @@ define(function(require, exports, module) {
     }
 
     SlideshowView.prototype.showCurrentSlide = function showCurrentSlide() {
+        this.ready = false;
+
         var slide = this.slides[this.currentIndex];
-        this.lightbox.show(slide);
+        this.lightbox.show(slide, function() {
+            this.ready = true;
+            slide.fadeIn();
+        }.bind(this));
     };
 
     SlideshowView.prototype.showNextSlide = function showNextSlide() {
+        if(!this.ready) return;
+
         this.currentIndex++;
         if (this.currentIndex === this.slides.length) this.currentIndex = 0;
         this.showCurrentSlide();
