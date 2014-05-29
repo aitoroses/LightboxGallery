@@ -7,15 +7,19 @@ define(function(require, exports, module) {
     var StateModifier = require('famous/modifiers/StateModifier');
     var ImageSurface = require('famous/surfaces/ImageSurface');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
+    // var Surface = require('famous/core/Surface');
 
 
     var SlideshowView = require('views/SlideshowView');
+    var SlideSidebarView = require('views/SlideSidebarView');
 
     function AppView() {
         View.apply(this, arguments);
 
         _createCamera.call(this);
         _createSlideshow.call(this);
+        _createSidebar.call(this);
+        _createBackground.call(this);
     }
 
     AppView.prototype = Object.create(View.prototype);
@@ -23,7 +27,8 @@ define(function(require, exports, module) {
 
     AppView.DEFAULT_OPTIONS = {
         data: undefined,
-        cameraWidth: 0.5 * window.innerHeight
+        cameraWidth: 0.5 * window.innerHeight,
+        backgroundImage: 'content/images/black-gradient-background.png'
     };
 
     AppView.DEFAULT_OPTIONS.slideWidth = 0.8 * AppView.DEFAULT_OPTIONS.cameraWidth;
@@ -73,6 +78,27 @@ define(function(require, exports, module) {
         slideshowContainer.add(slideshowView);
         slideshowContainer.context.setPerspective(1000);
 
+    }
+
+    function _createBackground() {
+        var background = new ImageSurface({
+            content: this.options.backgroundImage,
+            properties: {
+                zIndex: -1
+            }
+        });
+
+        var backgroundModifier = new StateModifier({
+            transform: Transform.behind
+        });
+
+        this.add(backgroundModifier).add(background);
+    }
+
+    function _createSidebar() {
+        // Create a new instance
+        var sidebar = new SlideSidebarView();
+        this.add(sidebar);
     }
 
     module.exports = AppView;
