@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
     Transitionable.registerMethod('spring', SpringTransition);
 
-    var SlideData = require('data/SlideData');
+    //var SlideData = require('../data/SlideData');
 
     function SlideView() {
         View.apply(this, arguments);
@@ -37,7 +37,7 @@ define(function(require, exports, module) {
         size: [400, 450],
         filmBorder: 15,
         photoBorder: 3,
-        photoUrl: SlideData.defaultImage,
+        //photoUrl: SlideData.defaultImage,
         angle: -0.5
     };
 

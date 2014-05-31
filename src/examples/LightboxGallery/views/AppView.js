@@ -9,8 +9,8 @@ define(function(require, exports, module) {
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
     // var Surface = require('famous/core/Surface');
 
-    var SlideshowView = require('views/SlideshowView');
-    var SlideSidebarView = require('views/SlideSidebarView');
+    var SlideshowView = require('./SlideshowView');
+    var SlideSidebarView = require('./SlideSidebarView');
 
     function AppView() {
         View.apply(this, arguments);

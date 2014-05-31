@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var Lightbox = require('famous/views/Lightbox');
     var Easing = require('famous/transitions/Easing');
 
-    var SlideView = require('views/SlideView');
+    var SlideView = require('./SlideView');
 
     function SlideshowView() {
         View.apply(this, arguments);
