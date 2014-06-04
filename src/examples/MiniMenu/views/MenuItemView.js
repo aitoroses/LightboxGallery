@@ -30,6 +30,8 @@ define(function(require, exports, module) {
         itemSize: 40
     };
 
+    MenuItemView.DEFAULT_OPTIONS.iconSize = MenuItemView.DEFAULT_OPTIONS.itemSize * 0.7;
+
     // Define your helper functions and prototype methods here
 
     function _createBackground() {
@@ -56,7 +58,7 @@ define(function(require, exports, module) {
 
         var icon = new ImageSurface({
             content: this.options.iconContent,
-            size: [this.options.itemSize, this.options.itemSize],
+            size: [this.options.iconSize, this.options.iconSize],
             properties: {
                 zIndex: 2,
                 pointerEvents: 'none'
